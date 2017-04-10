@@ -4,7 +4,7 @@ This repository shows how to use Elastic Stack (Filebeat, Elasticsearch, and Kib
 
 ## Features
 
-* Collecting and parsing MigratoryData logs by using Filebeat (access logs, message logs, and statistics)
+* Collecting and parsing MigratoryData logs (access logs, message logs, and statistics) by using Filebeat
 * Indexing MigratoryData logs into Elasticsearch
 * Building Kibana searches for analyzing data and dashboards for visualizing data
 
@@ -26,12 +26,12 @@ The installation of Elasticsearch and Kibana is straightforward. Simply download
 format, uncompress it, and run the script `elasticsearch`or `kibana` available in the folder `bin`. Other installation 
 formats such as `deb` and `rpm` are available too.
 
-You can start by installing one instance of Elasticsearch and one instance of Kibana on the **same machine** and using their 
-respective **default configurations**. Advanced Elastic Stack configurations and settings are available, including 
+You can start by installing one instance of Elasticsearch and one instance of Kibana on the *same machine* and using their 
+respective *default configurations*. Advanced Elastic Stack configurations and settings are available, including 
 high availability clustering, but these are beyond the scope of this tutorial.
 
 With the default configuration, Elasticsearch uses the port `9200` to accept connections and communicate both with 
-the FileBeat agents and Kibana. With the default configuraton, Kibana uses the port `5601` to accept connections from users.
+the Filebeat agents and Kibana. With the default configuraton, Kibana uses the port `5601` to accept connections from users.
 
-## FileBeat Installation and Configuration
+## Filebeat Installation and Configuration
 
