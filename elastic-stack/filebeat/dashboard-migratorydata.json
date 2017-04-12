@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "007692a0-15ee-11e7-a1ab-73c56499f49b",
+    "_type": "dashboard",
+    "_source": {
+      "title": "MigratoryDataDashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":8,\"id\":\"a745ceb0-15ea-11e7-a1ab-73c56499f49b\",\"panelIndex\":4,\"row\":4,\"size_x\":5,\"size_y\":5,\"type\":\"visualization\"},{\"col\":1,\"id\":\"dd480800-15ec-11e7-a1ab-73c56499f49b\",\"panelIndex\":5,\"row\":12,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":4,\"id\":\"0ba40320-15ed-11e7-a1ab-73c56499f49b\",\"panelIndex\":6,\"row\":12,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"c4684700-1e98-11e7-92ea-f116270170be\",\"panelIndex\":7,\"row\":9,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"060bddc0-1e99-11e7-92ea-f116270170be\",\"panelIndex\":8,\"row\":9,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"3dea1c50-1e96-11e7-92ea-f116270170be\",\"panelIndex\":9,\"row\":1,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"f936b810-1e96-11e7-92ea-f116270170be\",\"panelIndex\":10,\"row\":4,\"size_x\":7,\"size_y\":5,\"type\":\"visualization\"},{\"col\":7,\"id\":\"3863ec60-15eb-11e7-a1ab-73c56499f49b\",\"panelIndex\":11,\"row\":12,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":10,\"id\":\"4e6b4440-15eb-11e7-a1ab-73c56499f49b\",\"panelIndex\":12,\"row\":12,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"size_x\":6,\"size_y\":3,\"panelIndex\":13,\"type\":\"visualization\",\"id\":\"554fd640-1e97-11e7-92ea-f116270170be\",\"col\":1,\"row\":14},{\"size_x\":6,\"size_y\":3,\"panelIndex\":14,\"type\":\"visualization\",\"id\":\"6c2812b0-1e97-11e7-92ea-f116270170be\",\"col\":7,\"row\":14},{\"size_x\":6,\"size_y\":3,\"panelIndex\":15,\"type\":\"visualization\",\"id\":\"896c2370-1e97-11e7-92ea-f116270170be\",\"col\":1,\"row\":17},{\"size_x\":6,\"size_y\":3,\"panelIndex\":16,\"type\":\"visualization\",\"id\":\"9fc7dce0-1e97-11e7-92ea-f116270170be\",\"col\":7,\"row\":17},{\"size_x\":6,\"size_y\":3,\"panelIndex\":17,\"type\":\"visualization\",\"id\":\"d224c6d0-1e97-11e7-92ea-f116270170be\",\"col\":1,\"row\":20},{\"size_x\":6,\"size_y\":3,\"panelIndex\":18,\"type\":\"visualization\",\"id\":\"e7262060-1e97-11e7-92ea-f116270170be\",\"col\":7,\"row\":20}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-15m",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  }
+]
