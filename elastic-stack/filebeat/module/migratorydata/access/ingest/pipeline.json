@@ -1,0 +1,61 @@
+{
+    "description": "ingest pipeline for log-access",
+    "processors": [
+      {
+        "grok": {
+          "field": "message",
+          "patterns": [
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] (\\[user_agent=%{DATA:migratorydata.access.user_agent}\\] )?\\[session_type=%{WORD:migratorydata.access.session_type}\\] (\\[entitlement_token=%{DATA:migratorydata.access.entitlement_token}\\] )?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}",
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] (\\[disconnect_status=%{DATA:migratorydata.access.disconnect_status}\\]%{SPACE})?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}"
+          ],
+          "pattern_definitions": {
+            "ADDRESS": "%{IP}:%{POSINT}"
+          }
+        }
+      },
+    {
+        "remove": {
+            "field": "message"
+        }
+    },
+    {
+        "rename": {
+            "field": "@timestamp",
+            "target_field": "read_timestamp"
+        }
+    },
+      {
+        "date": {
+          "field": "migratorydata.access.time",
+          "target_field": "@timestamp",
+          "formats": ["ISO8601"]
+        }
+      },
+        {
+            "remove": {
+                "field": "migratorydata.access.time"
+            }
+        },
+      {
+        "convert": {
+          "field": "migratorydata.access.session_id",
+          "type" : "integer"
+        }
+      },
+      {
+        "split": {
+          "field": "migratorydata.access.subjects",
+          "separator": ",",
+          "ignore_failure" : true
+        }
+      }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}

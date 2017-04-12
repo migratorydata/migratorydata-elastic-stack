@@ -1,0 +1,107 @@
+{
+    "description": "ingest pipeline for log-stats",
+    "processors": [
+      {
+        "grok": {
+          "field": "message",
+          "patterns": [
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.stats.time}\\] \\[S\\] \\[INFO\\] \\[STATS\\] {%{NUMBER:migratorydata.stats.connected_sessions},%{NUMBER:migratorydata.stats.connected_sessions_web},%{NUMBER:migratorydata.stats.connected_sessions_mobile},%{NUMBER:migratorydata.stats.connected_sessions_desktop},%{NUMBER:migratorydata.stats.session_connections},%{NUMBER:migratorydata.stats.session_disconnections},%{NUMBER:migratorydata.stats.in_publish_msg},%{NUMBER:migratorydata.stats.out_publish_msg},%{NUMBER:migratorydata.stats.in_bytes},%{NUMBER:migratorydata.stats.out_bytes}}"
+          ],
+          "pattern_definitions": {
+            "ADDRESS": "%{IP}:%{POSINT}"
+          }
+        }
+      },
+    {
+        "remove": {
+            "field": "message"
+        }
+    },
+    {
+        "rename": {
+            "field": "@timestamp",
+            "target_field": "read_timestamp"
+        }
+    },
+      {
+        "date": {
+          "field": "migratorydata.stats.time",
+          "target_field": "@timestamp",
+          "formats": ["ISO8601"]
+        }
+      },
+    {
+        "remove": {
+            "field": "migratorydata.stats.time"
+        }
+    },
+      {
+        "convert": {
+          "field": "migratorydata.stats.connected_sessions",
+          "type" : "integer"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.connected_sessions_desktop",
+          "type" : "integer"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.connected_sessions_mobile",
+          "type" : "integer"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.connected_sessions_web",
+          "type" : "integer"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.in_bytes",
+          "type" : "float"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.out_bytes",
+          "type" : "float"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.in_publish_msg",
+          "type" : "float"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.out_publish_msg",
+          "type" : "float"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.session_connections",
+          "type" : "float"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.stats.session_disconnections",
+          "type" : "float"
+        }
+      }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}

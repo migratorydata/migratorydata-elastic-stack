@@ -1,0 +1,9 @@
+module_version: "1.0"
+
+var:
+  - name: paths
+    default:
+      - /var/log/migratorydata/all/message_*
+
+ingest_pipeline: ingest/pipeline.json
+prospector: config/message.yml

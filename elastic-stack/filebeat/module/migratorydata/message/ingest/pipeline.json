@@ -1,0 +1,45 @@
+{
+    "description": "ingest pipeline for log-message",
+    "processors": [
+      {
+        "grok": {
+          "field": "message",
+          "patterns": ["(\"%{TIMESTAMP_ISO8601:migratorydata.message.time}\"), (\"%{DATA:migratorydata.message.subject}\"), (\"%{DATA:migratorydata.message.content}\"), (\" (%{DATA:migratorydata.message.fields}) \", )?(\"From: {/%{ADDRESS:migratorydata.message.client_ip}}\", )?\"From: {/%{ADDRESS:migratorydata.message.server_ip}}\",%{SPACE}\"Status: %{DATA:migratorydata.message.status}\""],
+          "pattern_definitions": {
+            "ADDRESS": "%{IP}:%{POSINT}"
+          }
+        }
+      },
+    {
+        "remove": {
+            "field": "message"
+        }
+    },
+    {
+        "rename": {
+            "field": "@timestamp",
+            "target_field": "read_timestamp"
+        }
+    }, 
+      {
+        "date": {
+          "field": "migratorydata.message.time",
+          "target_field": "@timestamp",
+          "formats": ["ISO8601"]
+        }
+      },
+        {
+            "remove": {
+                "field": "migratorydata.message.time"
+            }
+        }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}

@@ -1,0 +1,6 @@
+input_type: log
+document_type: log-stats
+paths:
+{{ range $i, $path := .paths }}
+ - {{$path}}
+{{ end }}

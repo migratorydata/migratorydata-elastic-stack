@@ -1,0 +1,6 @@
+input_type: log
+document_type: log-message
+paths:
+{{ range $i, $path := .paths }}
+ - {{$path}}
+{{ end }}
