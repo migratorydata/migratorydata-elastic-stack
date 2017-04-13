@@ -1,12 +1,29 @@
-# Monitoring MigratoryData with Elastic Stack
+# Introducing MigratoryData to Big Data: Elastic Stack
 
-This repository shows how to use Elastic Stack (Filebeat, Elasticsearch, and Kibana) for monitoring a MigratoryData cluster.
+MigratoryData provides a number of monitoring options along the HTTP and JMX standards. In addition, any MigratoryData API 
+library can be used to subscribe to special monitoring subjects to receive various MigratoryData statistics in real-time.
 
-## Features
+MigratoryData also provides different log types including access logs and message logs. Various MigratoryData statistics, 
+made available along HTTP, JMX, and PUSH monitoring, are also logged on disk at configurable time intervals.
 
-* Collecting MigratoryData logs (access logs, message logs, and statistics) by using Filebeat
-* Indexing MigratoryData logs into Elasticsearch
-* Using Kibana to explore, filter, visualize and produce monitoring dashboards
+These logs are typically preserved for audit. However, they can be used for other purposes such as monitoring or even 
+debugging. For example, the message logs can be used by MigratoryData Replayer, a tool able to replay the feed of 
+messages. It is able to publish the recorded messages at the same speed as they occurred, accelerate or slow down the 
+original speed by preserving the timestamps proportions, and publish messages from a given start time until a given end time.
+
+As a very scalable messaging solution, MigratoryData is typically used in large deployment with millions of users. In this 
+way, the access logs and message logs produced by such high number of users consists in huge amounts of data. Hence, using 
+a big data platform is natural.
+
+In this blog post, we show how to use the popular open-source Elastic Stack platform for searching, analyzing, and 
+visualizing data produced by MigratoryData clusters. More precisely we will use:
+
+* Filebeat for collecting the MigratoryData logs (access logs, message logs, and statistics)
+* Elasticsearch for indexing the MigratoryData logs
+* Kibana for exploring, searching and filtering the MigratoryData logs and for building dashboards to visualize the data
+
+This blog post is based on Elastic Stack version 5.3.0 and MigratoryData 5.0.21. All configuration files, dashboards, 
+diagrams, and screenshots can be found on [github](https://github.com/migratorydata/migratorydata-elastic-stack).
 
 ## Setup
 
@@ -205,7 +222,7 @@ message with the following fields:
 #### Pipeline for Statistics
 
 The `pipeline` file of the `stats` section defines the rule for parsing the statistics written every 60 seconds 
-(configurable with the parameter `StatisticsTimeInterval`) to the MigratoryData server's main log file into Elasticsearch
+(configurable with the parameter `LogStatsInterval`) to the MigratoryData server's main log file into Elasticsearch
 messages with the following fields:
 
 ```
