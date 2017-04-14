@@ -11,7 +11,7 @@ purposes such as monitoring or even debugging. For example, message logs can be 
 able to replay a feed of messages, and publish recorded messages at slower, faster or original speeds by preserving the 
 timestamp proportions.
 
-It becomes obvious, then, how access logs and message logs produced by such a high number of users can result in a huge 
+It becomes obvious, then, how statistics logs, access logs, and message logs produced by such a high number of users can result in a huge 
 amount of data. Hence, using a big data platform is natural.
 
 In this blog post, we show how to use popular open-source big data platform Elastic Stack for searching, analyzing, 
