@@ -6,10 +6,10 @@ MigratoryData provides a number of monitoring options along the HTTP and JMX sta
 can be used to subscribe to special monitoring subjects and receive real-time statistics.
 
 These MigratoryData statistics, made available along HTTP, JMX, and PUSH monitoring, are also logged on disk (at 
-configurable time intervals) and, while these logs are typically preserved for audit, they can also be used for other 
-purposes such as monitoring or even debugging. For example, message logs can be used by MigratoryData Replayer - a tool 
-able to replay a feed of messages, and publish recorded messages at slower, faster or original speeds by preserving the 
-timestamp proportions.
+configurable time intervals) besides other log types such as access logs and message logs. While  these logs are 
+typically preserved for audit, they can also be used for other purposes such as monitoring or even debugging. For 
+example, message logs can be used by MigratoryData Replayer - a tool able to replay a feed of messages, and publish 
+recorded messages at slower, faster or original speeds by preserving the timestamp proportions.
 
 It becomes obvious, then, how statistics logs, access logs, and message logs produced by such a high number of users can result in a huge 
 amount of data. Hence, using a big data platform is natural.
