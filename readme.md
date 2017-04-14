@@ -217,7 +217,7 @@ document with the following fields:
 #### Pipeline for Statistics
 
 The `pipeline` file of the `stats` section defines the rule for parsing the statistics logged every 60 seconds 
-(configurable with the parameter `LogStatsInterval`)  into Elasticsearch documents with the following fields:
+(configurable with the parameter `Stats.LogInterval`)  into Elasticsearch documents with the following fields:
 
 ```
    @timestamp
