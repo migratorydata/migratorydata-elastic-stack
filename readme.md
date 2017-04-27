@@ -76,7 +76,7 @@ Edit the default configuration file `kibana.yml` located under the folder `confi
 `elasticsearch.url` as follows:
 
 ```
-elasticsearch.url = 192.168.1.1:9200
+elasticsearch.url = http://192.168.1.1:9200
 ```
 
 Finally, run the startup script `kibana` located under the folder `bin`.
@@ -252,7 +252,7 @@ documents corresponding to the MigratoryData logs received from the Filebeat age
 Finally, to run the Filebeat agent for the MigratoryData server of the cluster named, for example, `server1` use the following command:
 
 ```
-./filebeat -c migratorydata.yml -modules=migratorydata -E name=sever1 -e
+./filebeat -c migratorydata.yml -modules=migratorydata -E name=server1 -e
 ```
 
 Please note that the `-E name=server1` part of the above command is optional. If not provided, Filebeat will use the 
