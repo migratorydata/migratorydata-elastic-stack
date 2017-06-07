@@ -6,28 +6,28 @@ MigratoryData provides a number of monitoring options along the HTTP and JMX sta
 can be used to subscribe to special monitoring subjects and receive real-time statistics.
 
 These MigratoryData statistics, made available along HTTP, JMX, and PUSH monitoring, are also logged on disk (at 
-configurable time intervals) besides other log types such as access logs and message logs. While  these logs are 
+configurable time intervals) besides other log types such as access logs, message logs, and cache logs. While  these logs are 
 typically preserved for audit, they can also be used for other purposes such as monitoring or even debugging. For 
 example, message logs can be used by MigratoryData Replayer - a tool able to replay a feed of messages, and publish 
 recorded messages at slower, faster or original speeds by preserving the timestamp proportions.
 
-It becomes obvious, then, how statistics logs, access logs, and message logs produced by such a high number of users can result in a huge 
+It becomes obvious, then, how statistics logs, access logs, message logs, and cache logs produced by such a high number of users can result in a huge 
 amount of data. Hence, using a big data platform is natural.
 
 In this blog post, we show how to use popular open-source big data platform Elastic Stack for searching, analyzing, 
 and visualizing data produced by MigratoryData clusters. More precisely we will use:
 
-* Filebeat for collecting the MigratoryData logs (access logs, message logs, and statistics)
+* Filebeat for collecting the MigratoryData logs (access logs, message logs, cache logs, and statistics)
 * Elasticsearch for indexing MigratoryData logs
 * Kibana for exploring, searching and filtering MigratoryData logs and for building dashboards to visualize the data
 
-This blog post is based on Elastic Stack version 5.3.0 and MigratoryData version 5.0.21. All configuration files, 
+This blog post is based on Elastic Stack version 5.3.0 and MigratoryData version 5.0.22. All configuration files, 
 dashboards, diagrams, and screenshots can be found on [github](https://github.com/migratorydata/migratorydata-elastic-stack).
 
 ## Setup
 
 For the purposes of this post, our setup consists of a MigratoryData cluster of three nodes. Each node runs one instance 
-of MigratoryData Server and one instance of Filebeat. Filebeat is an agent which collects access logs, message logs, and 
+of MigratoryData Server and one instance of Filebeat. Filebeat is an agent which collects access logs, message logs, cache logs, and 
 statistics logs produced by the MigratoryData server. These logs are collected as soon as they are produced by the 
 MigratoryData server. Collected logs are then sent to Elasticsearch over the network. Finally, users connect from web 
 browsers to Kibana to make queries which are automatically forwarded to Elasticsearch.
@@ -96,7 +96,7 @@ apache2 or nginx. A module basically defines the rules for transforming a partic
 format understood by Elasticsearch. The module based architecture of Filebeat allows us to create new modules.
 
 We created a new module for Filebeat named `migratorydata` which defines the rules for parsing the access logs,
-message logs, and statistics logs of the MigratoryData server.
+message logs, cache logs, and statistics logs of the MigratoryData server.
 
 In order to install the new module, copy the folder `migratorydata` available in the 
 [github](https://github.com/migratorydata/migratorydata-elastic-stack) repository under the 
@@ -105,10 +105,16 @@ folder `elastic-stack/filebeat/module` into the folder `module` of your Filebeat
 The structure of the `migratorydata` module is as follows:
 
 ```
-migratorydata
+migratorydata/
 ├── access
 │   ├── config
 │   │   └── access.yml
+│   ├── ingest
+│   │   └── pipeline.json
+│   └── manifest.yml
+├── cache
+│   ├── config
+│   │   └── cache.yml
 │   ├── ingest
 │   │   └── pipeline.json
 │   └── manifest.yml
@@ -126,7 +132,7 @@ migratorydata
     └── manifest.yml
 ```
 
-The module is structured into three similar sections corresponding to the three log types: access logs, message logs, and 
+The module is structured into three similar sections corresponding to the three log types: access logs, message logs, cache logs, and 
 statistics. 
 
 ### Config Files

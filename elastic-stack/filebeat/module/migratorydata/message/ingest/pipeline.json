@@ -4,7 +4,7 @@
       {
         "grok": {
           "field": "message",
-          "patterns": ["(\"%{TIMESTAMP_ISO8601:migratorydata.message.time}\"), (\"%{DATA:migratorydata.message.subject}\"), (\"%{DATA:migratorydata.message.content}\"), (\" (%{DATA:migratorydata.message.fields}) \", )?(\"From: {/%{ADDRESS:migratorydata.message.client_ip}}\", )?\"From: {/%{ADDRESS:migratorydata.message.server_ip}}\",%{SPACE}\"Status: %{DATA:migratorydata.message.status}\""],
+          "patterns": ["(\"%{TIMESTAMP_ISO8601:migratorydata.message.time}\"), (\"%{DATA:migratorydata.message.subject}\"), (\"%{NUMBER:migratorydata.message.seq}\"), (\"%{NUMBER:migratorydata.message.epoch}\"), (\"%{DATA:migratorydata.message.content}\"), (\" (%{DATA:migratorydata.message.fields}) \", )?(\"From: {/%{ADDRESS:migratorydata.message.client_ip}}\", )?\"From: {/%{ADDRESS:migratorydata.message.server_ip}}\",%{SPACE}\"Status: %{DATA:migratorydata.message.status}\""],
           "pattern_definitions": {
             "ADDRESS": "%{IP}:%{POSINT}"
           }
@@ -26,6 +26,18 @@
           "field": "migratorydata.message.time",
           "target_field": "@timestamp",
           "formats": ["ISO8601"]
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.message.epoch",
+          "type" : "integer"
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.message.seq",
+          "type" : "integer"
         }
       },
         {

@@ -1,0 +1,79 @@
+{
+    "description": "ingest pipeline for log-cache",
+    "processors": [
+      {
+        "grok": {
+          "field": "message",
+          "patterns": [
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.cache.time}\\] \\[operation=%{WORD:migratorydata.cache.operation}\\] \\[type=%{WORD:migratorydata.cache.type}\\] \\[subject=%{DATA:migratorydata.cache.subject}\\] \\[seq=%{NUMBER:migratorydata.cache.seq}\\] \\[epoch=%{NUMBER:migratorydata.cache.epoch}\\] \\[client=/%{ADDRESS:migratorydata.cache.client_ip}\\] \\[%{DATA:migratorydata.cache.updates}\\]",
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.cache.time}\\] \\[operation=%{WORD:migratorydata.cache.operation}\\] \\[type=%{WORD:migratorydata.cache.type}\\] \\[subject=%{DATA:migratorydata.cache.subject}\\] \\[seq=%{NUMBER:migratorydata.cache.seq}\\] \\[epoch=%{NUMBER:migratorydata.cache.epoch}\\] ",
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.cache.time}\\] \\[operation=%{WORD:migratorydata.cache.operation}\\] \\[type=%{WORD:migratorydata.cache.type}\\] \\[subject=%{DATA:migratorydata.cache.subject}\\] \\[client=/%{ADDRESS:migratorydata.cache.client_ip}\\] \\[history=%{NUMBER:migratorydata.cache.history}\\] \\[%{DATA:migratorydata.cache.updates}\\]",
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.cache.time}\\] \\[operation=%{WORD:migratorydata.cache.operation}\\] \\[type=%{WORD:migratorydata.cache.type}\\] "
+          ],
+          "pattern_definitions": {
+            "ADDRESS": "%{IP}:%{POSINT}"
+          }
+        }
+      },
+    {
+        "remove": {
+            "field": "message"
+        }
+    },
+    {
+        "rename": {
+            "field": "@timestamp",
+            "target_field": "read_timestamp"
+        }
+    }, 
+      {
+        "date": {
+          "field": "migratorydata.cache.time",
+          "target_field": "@timestamp",
+          "formats": ["ISO8601"]
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.cache.epoch",
+          "type" : "integer",
+          "ignore_missing" : true
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.cache.seq",
+          "type" : "integer",
+          "ignore_missing" : true
+        }
+      },
+      {
+        "convert": {
+          "field": "migratorydata.cache.history",
+          "type" : "integer",
+          "ignore_missing" : true
+        }
+      },
+      {
+        "split": {
+          "field": "migratorydata.cache.updates",
+          "separator": " ",
+          "ignore_missing" : true,
+          "ignore_failure" : true
+        }
+      },
+        {
+            "remove": {
+                "field": "migratorydata.cache.time"
+            }
+        }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}

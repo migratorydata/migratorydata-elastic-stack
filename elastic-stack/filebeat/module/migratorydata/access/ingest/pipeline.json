@@ -5,8 +5,8 @@
         "grok": {
           "field": "message",
           "patterns": [
-            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] (\\[user_agent=%{DATA:migratorydata.access.user_agent}\\] )?\\[session_type=%{WORD:migratorydata.access.session_type}\\] (\\[entitlement_token=%{DATA:migratorydata.access.entitlement_token}\\] )?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}",
-            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] (\\[disconnect_status=%{DATA:migratorydata.access.disconnect_status}\\]%{SPACE})?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}"
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] \\[type=%{WORD:migratorydata.access.type}\\] (\\[user_agent=%{DATA:migratorydata.access.user_agent}\\] )?\\[session_type=%{WORD:migratorydata.access.session_type}\\] (\\[entitlement_token=%{DATA:migratorydata.access.entitlement_token}\\] )?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}",
+            "\\[%{TIMESTAMP_ISO8601:migratorydata.access.time}\\] \\[id=%{NUMBER:migratorydata.access.session_id}\\] \\[/%{ADDRESS:migratorydata.access.client_ip}\\] \\[operation=%{WORD:migratorydata.access.operation}\\] \\[type=%{WORD:migratorydata.access.type}\\] (\\[disconnect_status=%{DATA:migratorydata.access.disconnect_status}\\]%{SPACE})?(\\[subjects=\\[%{DATA:migratorydata.access.subjects}\\]\\])?%{SPACE}"
           ],
           "pattern_definitions": {
             "ADDRESS": "%{IP}:%{POSINT}"
@@ -46,6 +46,7 @@
         "split": {
           "field": "migratorydata.access.subjects",
           "separator": ",",
+          "ignore_missing" : true,
           "ignore_failure" : true
         }
       }
